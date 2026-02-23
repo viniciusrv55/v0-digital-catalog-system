@@ -247,6 +247,25 @@ export interface Assinatura {
   created?: string
 }
 
+// Pixel tracking config per establishment
+export interface PixelConfig {
+  metaPixelId?: string
+  googleAnalyticsId?: string
+  tiktokPixelId?: string
+}
+
+// Platform-level config (admin)
+export interface PlatformConfig {
+  // Admin pixels (for monitoring ad conversions across the platform)
+  adminMetaPixelId?: string
+  adminGoogleAnalyticsId?: string
+  adminTiktokPixelId?: string
+  // ASAAS payment gateway
+  asaasApiKey?: string
+  asaasSandbox: boolean
+  asaasWebhookToken?: string
+}
+
 export type PedidoStatus = "1" | "2" | "3" | "4" | "5" | "6"
 
 export const PEDIDO_STATUS_LABELS: Record<PedidoStatus, string> = {
