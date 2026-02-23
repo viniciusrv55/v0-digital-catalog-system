@@ -9,11 +9,6 @@ import { Label } from "@/components/ui/label"
 import { toast } from "sonner"
 import { LogIn, Eye, EyeOff } from "lucide-react"
 
-const MOCK_USERS = [
-  { email: "admin@zapmaxx.com.br", senha: "admin123", redirect: "/admin" },
-  { email: "joao@pizzadaboa.com", senha: "loja123", redirect: "/painel" },
-]
-
 export default function LoginPage() {
   const router = useRouter()
   const [email, setEmail] = useState("")
@@ -21,7 +16,7 @@ export default function LoginPage() {
   const [showSenha, setShowSenha] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  function handleLogin(e: React.FormEvent) {
+  async function handleLogin(e: React.FormEvent) {
     e.preventDefault()
     if (!email.trim() || !senha.trim()) {
       toast.error("Preencha todos os campos")
@@ -30,19 +25,27 @@ export default function LoginPage() {
 
     setLoading(true)
 
-    // Mock auth
-    setTimeout(() => {
-      const user = MOCK_USERS.find(
-        (u) => u.email === email.toLowerCase() && u.senha === senha
-      )
-      if (user) {
-        toast.success("Login realizado com sucesso!")
-        router.push(user.redirect)
-      } else {
-        toast.error("Email ou senha incorretos")
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim(), senha }),
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        toast.error(data.error || "Email ou senha incorretos")
+        setLoading(false)
+        return
       }
+
+      toast.success("Login realizado com sucesso!")
+      router.push(data.redirect)
+    } catch {
+      toast.error("Erro ao conectar com o servidor")
       setLoading(false)
-    }, 600)
+    }
   }
 
   return (
