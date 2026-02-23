@@ -2,15 +2,17 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
+import { createClient } from "@/lib/supabase/client"
 import {
   LayoutDashboard, Store, Users, CreditCard, Settings,
-  LogOut, Menu, X, ChevronRight, Shield
+  LogOut, Menu, X, ChevronRight, Shield, Ticket
 } from "lucide-react"
 
 const adminNavItems = [
   { href: "/admin", icon: LayoutDashboard, label: "Painel" },
   { href: "/admin/estabelecimentos", icon: Store, label: "Estabelecimentos" },
+  { href: "/admin/cupons", icon: Ticket, label: "Cupons" },
   { href: "/admin/planos", icon: CreditCard, label: "Planos" },
   { href: "/admin/usuarios", icon: Users, label: "Usuarios" },
   { href: "/admin/configuracoes", icon: Settings, label: "Configuracoes" },
@@ -18,7 +20,15 @@ const adminNavItems = [
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
+  const router = useRouter()
   const [sidebarOpen, setSidebarOpen] = useState(false)
+
+  async function handleLogout() {
+    const supabase = createClient()
+    await supabase.auth.signOut()
+    router.push("/login")
+    router.refresh()
+  }
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -80,13 +90,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
         {/* Bottom */}
         <div className="border-t border-white/10 px-3 py-3">
-          <Link
-            href="/login"
-            className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-white/60 hover:bg-white/5 hover:text-red-400"
+          <button
+            onClick={handleLogout}
+            className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-white/60 hover:bg-white/5 hover:text-red-400"
           >
             <LogOut className="h-4 w-4" />
             Sair
-          </Link>
+          </button>
         </div>
       </aside>
 

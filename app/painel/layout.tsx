@@ -2,8 +2,9 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { mockLoja } from "@/lib/mock-data"
+import { createClient } from "@/lib/supabase/client"
 import {
   LayoutDashboard, ShoppingBag, Package, Tag, Image, Truck, Ticket,
   Settings, CreditCard, BarChart3, LogOut, ExternalLink, Menu, X, ChevronRight
@@ -24,8 +25,16 @@ const navItems = [
 
 export default function PainelLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
+  const router = useRouter()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const loja = mockLoja
+
+  async function handleLogout() {
+    const supabase = createClient()
+    await supabase.auth.signOut()
+    router.push("/login")
+    router.refresh()
+  }
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -112,13 +121,13 @@ export default function PainelLayout({ children }: { children: React.ReactNode }
             <ExternalLink className="h-4 w-4" />
             Ver Loja
           </a>
-          <Link
-            href="/login"
-            className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-red-400"
+          <button
+            onClick={handleLogout}
+            className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-red-400"
           >
             <LogOut className="h-4 w-4" />
             Sair
-          </Link>
+          </button>
         </div>
       </aside>
 
