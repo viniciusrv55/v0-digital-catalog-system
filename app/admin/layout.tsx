@@ -2,11 +2,12 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import {
   LayoutDashboard, Store, Users, CreditCard, Settings,
   LogOut, Menu, X, ChevronRight, Shield
 } from "lucide-react"
+import { toast } from "sonner"
 
 const adminNavItems = [
   { href: "/admin", icon: LayoutDashboard, label: "Painel" },
@@ -18,7 +19,14 @@ const adminNavItems = [
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
+  const router = useRouter()
   const [sidebarOpen, setSidebarOpen] = useState(false)
+
+  async function handleLogout() {
+    await fetch("/api/auth/logout", { method: "POST" })
+    toast.success("Logout realizado")
+    router.push("/login")
+  }
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -80,13 +88,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
         {/* Bottom */}
         <div className="border-t border-white/10 px-3 py-3">
-          <Link
-            href="/login"
-            className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-white/60 hover:bg-white/5 hover:text-red-400"
+          <button
+            onClick={handleLogout}
+            className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-white/60 hover:bg-white/5 hover:text-red-400"
           >
             <LogOut className="h-4 w-4" />
             Sair
-          </Link>
+          </button>
         </div>
       </aside>
 

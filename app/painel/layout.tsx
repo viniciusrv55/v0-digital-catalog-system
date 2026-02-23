@@ -2,12 +2,13 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { mockLoja } from "@/lib/mock-data"
 import {
   LayoutDashboard, ShoppingBag, Package, Tag, Image, Truck, Ticket,
   Settings, CreditCard, BarChart3, LogOut, ExternalLink, Menu, X, ChevronRight
 } from "lucide-react"
+import { toast } from "sonner"
 
 const navItems = [
   { href: "/painel", icon: LayoutDashboard, label: "Inicio" },
@@ -24,8 +25,15 @@ const navItems = [
 
 export default function PainelLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
+  const router = useRouter()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const loja = mockLoja
+
+  async function handleLogout() {
+    await fetch("/api/auth/logout", { method: "POST" })
+    toast.success("Logout realizado")
+    router.push("/login")
+  }
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -112,13 +120,13 @@ export default function PainelLayout({ children }: { children: React.ReactNode }
             <ExternalLink className="h-4 w-4" />
             Ver Loja
           </a>
-          <Link
-            href="/login"
-            className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-red-400"
+          <button
+            onClick={handleLogout}
+            className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-red-400"
           >
             <LogOut className="h-4 w-4" />
             Sair
-          </Link>
+          </button>
         </div>
       </aside>
 
