@@ -6,6 +6,10 @@ import type {
   Frete,
   Cupom,
   Pedido,
+  Pixel,
+  Plano,
+  Usuario,
+  PlataformaConfig,
 } from "./types"
 
 // ============================================================
@@ -261,3 +265,62 @@ export const mockPedidos: Pedido[] = [
     json: "1x Quatro Queijos Grande, 1x Frango com Catupiry, 1x Guarana 2L",
   },
 ]
+
+// ============================================================
+// Mock Planos (for admin management)
+// ============================================================
+export const mockPlanos: Plano[] = [
+  {
+    id: 1, nome: "Gratis", descricao: "Plano gratuito com funcionalidades basicas",
+    duracaoMeses: "1", duracaoDias: "30", valorTotal: 0, valorMensal: 0,
+    funcionalidadeMarketplace: "2", funcionalidadeVariacao: "2", funcionalidadeBanners: "2",
+    visible: "1", status: "1", ordem: "1", limiteProdutos: "10",
+  },
+  {
+    id: 2, nome: "Essencial", descricao: "Ideal para pequenos negocios",
+    duracaoMeses: "1", duracaoDias: "30", valorTotal: 49.90, valorMensal: 49.90,
+    funcionalidadeMarketplace: "1", funcionalidadeVariacao: "1", funcionalidadeBanners: "1",
+    visible: "1", status: "1", ordem: "2", limiteProdutos: "50",
+  },
+  {
+    id: 3, nome: "Profissional", descricao: "Para negocios em crescimento com pagamento online",
+    duracaoMeses: "1", duracaoDias: "30", valorTotal: 99.90, valorMensal: 99.90,
+    funcionalidadeMarketplace: "1", funcionalidadeVariacao: "1", funcionalidadeBanners: "1",
+    visible: "1", status: "1", ordem: "3", limiteProdutos: "999",
+  },
+]
+
+// ============================================================
+// Mock Usuarios
+// ============================================================
+export const mockUsuarios: Usuario[] = [
+  { id: 1, nome: "Admin Master", email: "admin@zapmaxx.com.br", role: "admin", status: "1", createdAt: "2025-01-15T10:00:00Z" },
+  { id: 2, nome: "Joao Pizza", email: "joao@pizzadaboa.com", cpfCnpj: "123.456.789-00", role: "owner", status: "1", relEstabelecimentosId: "1", estabelecimentoNome: "Pizza da Boa", trialEndsAt: "2026-12-31", createdAt: "2025-03-10T14:30:00Z" },
+  { id: 3, nome: "Maria Acai", email: "maria@acaipower.com", cpfCnpj: "987.654.321-00", role: "owner", status: "1", relEstabelecimentosId: "2", estabelecimentoNome: "Acai Power", trialEndsAt: "2027-03-15", createdAt: "2025-05-20T09:15:00Z" },
+  { id: 4, nome: "Carlos Burger", email: "carlos@bklab.com", cpfCnpj: "11.222.333/0001-44", role: "owner", status: "1", relEstabelecimentosId: "3", estabelecimentoNome: "Burger King Lab", trialEndsAt: "2026-06-01", createdAt: "2025-06-01T11:00:00Z" },
+  { id: 5, nome: "Ana Sushi", email: "ana@sushitokyo.com", cpfCnpj: "555.666.777-88", role: "owner", status: "2", relEstabelecimentosId: "4", estabelecimentoNome: "Sushi Tokyo", createdAt: "2025-07-12T16:45:00Z" },
+  { id: 6, nome: "Pedro Cafe", email: "pedro@cafearoma.com", cpfCnpj: "999.888.777-66", role: "owner", status: "1", relEstabelecimentosId: "5", estabelecimentoNome: "Cafe Aroma", trialEndsAt: "2027-01-20", createdAt: "2025-08-05T08:30:00Z" },
+]
+
+// ============================================================
+// Mock Pixels
+// ============================================================
+export const mockPixels: Pixel[] = [
+  { id: 1, provider: "facebook", pixelId: "123456789012345", label: "Facebook Pixel Principal", ativo: true },
+  { id: 2, provider: "google_analytics", pixelId: "G-XXXXXXXXXX", label: "GA4 Plataforma", ativo: true },
+]
+
+export const mockPixelsLoja: Pixel[] = [
+  { id: 10, relEstabelecimentosId: "1", provider: "facebook", pixelId: "999888777666555", label: "FB Pixel Loja", ativo: true },
+  { id: 11, relEstabelecimentosId: "1", provider: "google_analytics", pixelId: "G-LOJAPIZZA", label: "GA4 Loja", ativo: false },
+]
+
+// ============================================================
+// Mock Plataforma Config
+// ============================================================
+export const mockPlataformaConfig: PlataformaConfig = {
+  id: 1,
+  asaasApiKeyGlobal: "",
+  asaasSandboxGlobal: true,
+  pixels: mockPixels,
+}

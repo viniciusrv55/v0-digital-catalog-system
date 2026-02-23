@@ -278,3 +278,93 @@ export const FORMA_PAGAMENTO_LABELS: Record<string, string> = {
   "8": "Cartao (Online)",
   "9": "Boleto",
 }
+
+// ============================================================
+// Pixel / Tracking Types
+// ============================================================
+
+export type PixelProvider = "facebook" | "google_analytics" | "google_ads" | "tiktok"
+
+export interface Pixel {
+  id: number
+  relEstabelecimentosId?: string // per-store pixel (null = platform-level)
+  provider: PixelProvider
+  pixelId: string
+  label?: string
+  ativo: boolean
+}
+
+export const PIXEL_PROVIDER_LABELS: Record<PixelProvider, string> = {
+  facebook: "Facebook Pixel",
+  google_analytics: "Google Analytics",
+  google_ads: "Google Ads",
+  tiktok: "TikTok Pixel",
+}
+
+// ============================================================
+// ASAAS Integration Types
+// ============================================================
+
+export interface AsaasConfig {
+  apiKey: string
+  sandbox: boolean
+  pixHabilitado: boolean
+  cartaoHabilitado: boolean
+  boletoHabilitado: boolean
+}
+
+export interface AsaasPaymentResponse {
+  id: string
+  status: "PENDING" | "RECEIVED" | "CONFIRMED" | "OVERDUE" | "REFUNDED" | "CANCELLED"
+  value: number
+  billingType: "PIX" | "CREDIT_CARD" | "BOLETO"
+  invoiceUrl?: string
+  pixQrCodeUrl?: string
+  pixCopiaECola?: string
+  bankSlipUrl?: string
+}
+
+export interface AsaasCustomer {
+  id: string
+  name: string
+  cpfCnpj: string
+  email?: string
+  phone?: string
+}
+
+export interface AsaasPaymentRequest {
+  customer: string
+  billingType: "PIX" | "CREDIT_CARD" | "BOLETO"
+  value: number
+  dueDate: string
+  description?: string
+  externalReference?: string
+}
+
+// ============================================================
+// Platform Config Types
+// ============================================================
+
+export interface PlataformaConfig {
+  id: number
+  asaasApiKeyGlobal?: string
+  asaasSandboxGlobal: boolean
+  pixels: Pixel[]
+}
+
+// ============================================================
+// User / Admin Types
+// ============================================================
+
+export interface Usuario {
+  id: number
+  nome: string
+  email: string
+  cpfCnpj?: string
+  role: "admin" | "owner"
+  status: string
+  relEstabelecimentosId?: string
+  estabelecimentoNome?: string
+  trialEndsAt?: string
+  createdAt: string
+}
