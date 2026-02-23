@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import type { Estabelecimento } from "@/lib/types"
 import { isStoreOpen } from "@/lib/store-utils"
 import { MapPin, Clock } from "lucide-react"
@@ -9,9 +10,13 @@ interface StoreHeaderProps {
 }
 
 export function StoreHeader({ loja }: StoreHeaderProps) {
-  const open = isStoreOpen(loja.horarios)
-  const isManualClosed = loja.funcionamento === "2"
-  const storeIsOpen = open && !isManualClosed
+  const [storeIsOpen, setStoreIsOpen] = useState(false)
+
+  useEffect(() => {
+    const open = isStoreOpen(loja.horarios)
+    const isManualClosed = loja.funcionamento === "2"
+    setStoreIsOpen(open && !isManualClosed)
+  }, [loja.horarios, loja.funcionamento])
 
   return (
     <header className="relative">
