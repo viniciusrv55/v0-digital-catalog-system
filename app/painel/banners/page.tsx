@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { mockBanners } from "@/lib/mock-data"
+import { useTenant } from "@/hooks/use-tenant"
 import type { Banner } from "@/lib/types"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -18,7 +18,8 @@ import { Plus, Pencil, Trash2, ImageIcon } from "lucide-react"
 import { toast } from "sonner"
 
 export default function BannersPage() {
-  const [banners, setBanners] = useState<Banner[]>(mockBanners)
+  const { banners: initialBanners } = useTenant()
+  const [banners, setBanners] = useState<Banner[]>(initialBanners)
   const [editando, setEditando] = useState<Banner | null>(null)
   const [isNew, setIsNew] = useState(false)
 

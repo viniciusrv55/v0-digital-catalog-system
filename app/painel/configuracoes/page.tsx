@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { mockLoja } from "@/lib/mock-data"
+import { useTenant } from "@/hooks/use-tenant"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -20,7 +20,8 @@ import { toast } from "sonner"
 import { Save } from "lucide-react"
 
 export default function ConfiguracoesPage() {
-  const [loja, setLoja] = useState(mockLoja)
+  const { loja: tenantLoja } = useTenant()
+  const [loja, setLoja] = useState(tenantLoja!)
 
   function salvar() {
     toast.success("Configuracoes salvas com sucesso")

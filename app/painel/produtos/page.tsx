@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { mockProdutos, mockCategorias } from "@/lib/mock-data"
+import { useTenant } from "@/hooks/use-tenant"
 import type { Produto } from "@/lib/types"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -27,13 +27,12 @@ import { Plus, Pencil, Trash2, Search, Package, ImageIcon } from "lucide-react"
 import { toast } from "sonner"
 
 export default function ProdutosPage() {
-  const [produtos, setProdutos] = useState<Produto[]>(mockProdutos)
+  const { produtos: initialProdutos, categorias } = useTenant()
+  const [produtos, setProdutos] = useState<Produto[]>(initialProdutos)
   const [search, setSearch] = useState("")
   const [catFilter, setCatFilter] = useState("todos")
   const [editando, setEditando] = useState<Produto | null>(null)
   const [isNew, setIsNew] = useState(false)
-
-  const categorias = mockCategorias
 
   const filtrados = produtos.filter((p) => {
     const matchSearch = p.nome.toLowerCase().includes(search.toLowerCase())

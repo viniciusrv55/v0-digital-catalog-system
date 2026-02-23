@@ -62,7 +62,7 @@ export default function CadastroPage() {
       }
 
       toast.success("Conta criada com sucesso!")
-      router.push("/painel")
+      window.location.href = "/painel"
     } catch {
       toast.error("Erro de conexao. Tente novamente.")
       setLoading(false)

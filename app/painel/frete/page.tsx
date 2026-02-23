@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { mockFretes } from "@/lib/mock-data"
+import { useTenant } from "@/hooks/use-tenant"
 import type { Frete } from "@/lib/types"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -17,7 +17,8 @@ import { Plus, Pencil, Trash2, Truck } from "lucide-react"
 import { toast } from "sonner"
 
 export default function FretePage() {
-  const [fretes, setFretes] = useState<Frete[]>(mockFretes)
+  const { fretes: initialFretes } = useTenant()
+  const [fretes, setFretes] = useState<Frete[]>(initialFretes)
   const [editando, setEditando] = useState<Frete | null>(null)
   const [isNew, setIsNew] = useState(false)
 

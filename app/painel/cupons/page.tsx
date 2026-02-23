@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { mockCupons } from "@/lib/mock-data"
+import { useTenant } from "@/hooks/use-tenant"
 import type { Cupom } from "@/lib/types"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -25,7 +25,8 @@ import { Plus, Pencil, Trash2, Ticket } from "lucide-react"
 import { toast } from "sonner"
 
 export default function CuponsPage() {
-  const [cupons, setCupons] = useState<Cupom[]>(mockCupons)
+  const { cupons: initialCupons } = useTenant()
+  const [cupons, setCupons] = useState<Cupom[]>(initialCupons)
   const [editando, setEditando] = useState<Cupom | null>(null)
   const [isNew, setIsNew] = useState(false)
 

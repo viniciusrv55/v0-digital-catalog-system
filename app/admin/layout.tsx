@@ -25,7 +25,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   async function handleLogout() {
     await fetch("/api/auth/logout", { method: "POST" })
     toast.success("Logout realizado")
-    router.push("/login")
+    window.location.href = "/login"
   }
 
   return (

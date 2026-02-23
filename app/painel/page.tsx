@@ -1,6 +1,6 @@
 "use client"
 
-import { mockLoja, mockPedidos, mockProdutos, mockCategorias } from "@/lib/mock-data"
+import { useTenant } from "@/hooks/use-tenant"
 import { PEDIDO_STATUS_LABELS, PEDIDO_STATUS_COLORS, type PedidoStatus } from "@/lib/types"
 import {
   ShoppingBag, Package, DollarSign, TrendingUp, Clock, AlertCircle
@@ -30,10 +30,8 @@ function StatCard({
 }
 
 export default function PainelHomePage() {
-  const loja = mockLoja
-  const pedidos = mockPedidos
-  const produtos = mockProdutos
-  const categorias = mockCategorias
+  const { loja, pedidos, produtos, categorias } = useTenant()
+  if (!loja) return null
 
   const pedidosHoje = pedidos.filter((p) => {
     const hoje = new Date().toDateString()

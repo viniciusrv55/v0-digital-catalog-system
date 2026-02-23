@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { mockCategorias } from "@/lib/mock-data"
+import { useTenant } from "@/hooks/use-tenant"
 import type { Categoria } from "@/lib/types"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -18,7 +18,8 @@ import { Plus, Pencil, Trash2, GripVertical, Tag } from "lucide-react"
 import { toast } from "sonner"
 
 export default function CategoriasPage() {
-  const [categorias, setCategorias] = useState<Categoria[]>(mockCategorias)
+  const { categorias: initialCategorias } = useTenant()
+  const [categorias, setCategorias] = useState<Categoria[]>(initialCategorias)
   const [editando, setEditando] = useState<Categoria | null>(null)
   const [isNew, setIsNew] = useState(false)
 

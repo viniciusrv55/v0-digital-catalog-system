@@ -1,12 +1,12 @@
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { mockPedidos } from "@/lib/mock-data"
+import { useTenant } from "@/hooks/use-tenant"
 import { PEDIDO_STATUS_LABELS, FORMA_PAGAMENTO_LABELS, type PedidoStatus } from "@/lib/types"
 import { BarChart3, TrendingUp, DollarSign, ShoppingBag } from "lucide-react"
 
 export default function RelatorioPage() {
-  const pedidos = mockPedidos
+  const { pedidos } = useTenant()
   const total = pedidos.reduce((sum, p) => sum + p.vPedido + p.taxa, 0)
   const concluidos = pedidos.filter((p) => p.status === "5")
   const cancelados = pedidos.filter((p) => p.status === "6")

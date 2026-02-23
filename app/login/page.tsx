@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -12,6 +12,7 @@ import { toast } from "sonner"
 
 export default function LoginPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [email, setEmail] = useState("")
   const [senha, setSenha] = useState("")
   const [showPassword, setShowPassword] = useState(false)
@@ -44,11 +45,10 @@ export default function LoginPage() {
 
       toast.success("Login realizado com sucesso!")
 
-      if (data.user.role === "admin") {
-        router.push("/admin")
-      } else {
-        router.push("/painel")
-      }
+      // Use hard redirect so the browser sends the newly-set cookie to middleware
+      const defaultRedirect = data.user.role === "admin" ? "/admin" : "/painel"
+      const redirectTo = searchParams.get("redirect") || defaultRedirect
+      window.location.href = redirectTo
     } catch {
       toast.error("Erro de conexao. Tente novamente.")
       setLoading(false)

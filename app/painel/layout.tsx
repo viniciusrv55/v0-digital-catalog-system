@@ -3,10 +3,10 @@
 import { useState } from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { mockLoja } from "@/lib/mock-data"
+import { useTenant } from "@/hooks/use-tenant"
 import {
   LayoutDashboard, ShoppingBag, Package, Tag, Image, Truck, Ticket,
-  Settings, CreditCard, BarChart3, LogOut, ExternalLink, Menu, X, ChevronRight
+  Settings, CreditCard, BarChart3, LogOut, ExternalLink, Menu, X, ChevronRight, Loader2
 } from "lucide-react"
 import { toast } from "sonner"
 
@@ -27,12 +27,20 @@ export default function PainelLayout({ children }: { children: React.ReactNode }
   const pathname = usePathname()
   const router = useRouter()
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const loja = mockLoja
+  const { loja, isLoading } = useTenant()
 
   async function handleLogout() {
     await fetch("/api/auth/logout", { method: "POST" })
     toast.success("Logout realizado")
-    router.push("/login")
+    window.location.href = "/login"
+  }
+
+  if (isLoading || !loja) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    )
   }
 
   return (

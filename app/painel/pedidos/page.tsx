@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { mockPedidos } from "@/lib/mock-data"
+import { useTenant } from "@/hooks/use-tenant"
 import {
   PEDIDO_STATUS_LABELS,
   PEDIDO_STATUS_COLORS,
@@ -29,7 +29,8 @@ import { toast } from "sonner"
 import type { Pedido } from "@/lib/types"
 
 export default function PedidosPage() {
-  const [pedidos, setPedidos] = useState(mockPedidos)
+  const { pedidos: initialPedidos } = useTenant()
+  const [pedidos, setPedidos] = useState(initialPedidos)
   const [filtro, setFiltro] = useState<string>("todos")
   const [selected, setSelected] = useState<Pedido | null>(null)
 
