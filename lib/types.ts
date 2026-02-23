@@ -353,6 +353,24 @@ export interface PlataformaConfig {
 }
 
 // ============================================================
+// Trial Coupon Types
+// ============================================================
+
+export interface CupomTrial {
+  id: number
+  codigo: string
+  diasTrial: number
+  relPlanosId?: string
+  usado: boolean
+  usadoPor?: string // email of user who redeemed it
+  usadoEm?: string  // ISO date when redeemed
+  criadoPor: string // admin email who created it
+  criadoEm: string  // ISO date
+  expiracao?: string // ISO date, coupon itself can expire
+  observacao?: string
+}
+
+// ============================================================
 // User / Admin Types
 // ============================================================
 

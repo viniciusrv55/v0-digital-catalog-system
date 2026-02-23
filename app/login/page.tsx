@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -109,8 +110,18 @@ export default function LoginPage() {
           </CardContent>
         </Card>
 
+        <div className="mt-4 text-center text-sm text-muted-foreground">
+          Ainda nao tem conta?{" "}
+          <Link
+            href="/cadastro"
+            className="font-medium text-primary hover:underline"
+          >
+            Cadastre-se com cupom de trial
+          </Link>
+        </div>
+
         {/* Demo credentials */}
-        <div className="mt-4 rounded-xl border border-border bg-muted p-3 text-center text-xs text-muted-foreground">
+        <div className="mt-3 rounded-xl border border-border bg-muted p-3 text-center text-xs text-muted-foreground">
           <p className="mb-1 font-medium text-foreground">Credenciais de teste</p>
           <p>
             Admin: <span className="font-mono">admin@zapmaxx.com.br</span> / <span className="font-mono">admin123</span>

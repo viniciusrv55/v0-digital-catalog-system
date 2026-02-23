@@ -10,6 +10,7 @@ import type {
   Plano,
   Usuario,
   PlataformaConfig,
+  CupomTrial,
 } from "./types"
 
 // ============================================================
@@ -313,6 +314,57 @@ export const mockPixels: Pixel[] = [
 export const mockPixelsLoja: Pixel[] = [
   { id: 10, relEstabelecimentosId: "1", provider: "facebook", pixelId: "999888777666555", label: "FB Pixel Loja", ativo: true },
   { id: 11, relEstabelecimentosId: "1", provider: "google_analytics", pixelId: "G-LOJAPIZZA", label: "GA4 Loja", ativo: false },
+]
+
+// ============================================================
+// Mock Cupons de Trial
+// ============================================================
+export const mockCuponsTrial: CupomTrial[] = [
+  {
+    id: 1,
+    codigo: "TRIAL-JOAO-2026",
+    diasTrial: 30,
+    relPlanosId: "2",
+    usado: true,
+    usadoPor: "joao@pizzadaboa.com",
+    usadoEm: "2025-03-10T14:30:00Z",
+    criadoPor: "admin@zapmaxx.com.br",
+    criadoEm: "2025-03-01T10:00:00Z",
+    observacao: "Cupom para teste do Joao",
+  },
+  {
+    id: 2,
+    codigo: "TRIAL-MARIA-2026",
+    diasTrial: 30,
+    relPlanosId: "3",
+    usado: true,
+    usadoPor: "maria@acaipower.com",
+    usadoEm: "2025-05-20T09:15:00Z",
+    criadoPor: "admin@zapmaxx.com.br",
+    criadoEm: "2025-05-15T08:00:00Z",
+  },
+  {
+    id: 3,
+    codigo: "TRIAL-DEMO-30D",
+    diasTrial: 30,
+    relPlanosId: "2",
+    usado: false,
+    criadoPor: "admin@zapmaxx.com.br",
+    criadoEm: "2026-02-20T12:00:00Z",
+    expiracao: "2026-12-31",
+    observacao: "Cupom de demonstracao disponivel",
+  },
+  {
+    id: 4,
+    codigo: "TRIAL-VIP-60D",
+    diasTrial: 60,
+    relPlanosId: "3",
+    usado: false,
+    criadoPor: "admin@zapmaxx.com.br",
+    criadoEm: "2026-02-20T12:00:00Z",
+    expiracao: "2026-06-30",
+    observacao: "Cupom VIP 60 dias - Plano Profissional",
+  },
 ]
 
 // ============================================================
